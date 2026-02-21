@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Son of Anton — Code Annihilator</title>
+    <meta name="description"
+        content="AI code simplifier that solves problems through elimination, not addition. Inspired by Silicon Valley.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Orbitron:wght@400;700;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- Scanline overlay -->
+    <div class="scanlines"></div>
+
+    <!-- Floating particles -->
+    <div class="particles" id="particles"></div>
+
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo-container">
+                <div class="logo-icon">
+                    <span class="skull">💀</span>
+                </div>
+                <div class="logo-text">
+                    <h1 class="glitch" data-text="SON OF ANTON">SON OF ANTON</h1>
+                    <p class="tagline">optimization through <span class="highlight">elimination</span></p>
+                </div>
+            </div>
+            <div class="header-stats">
+                <div class="stat-pill">
+                    <span class="stat-dot live"></span>
+                    <span>GROQ ONLINE</span>
+                </div>
+                <div class="stat-pill version">
+                    <span>v1.0.0</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main">
+            <!-- Input Section -->
+            <section class="panel input-panel">
+                <div class="panel-header">
+                    <div class="panel-dots">
+                        <span class="dot red"></span>
+                        <span class="dot yellow"></span>
+                        <span class="dot green"></span>
+                    </div>
+                    <span class="panel-title">INPUT_TERMINAL</span>
+                    <span class="panel-badge">PASTE YOUR BLOAT</span>
+                </div>
+
+                <div class="panel-body">
+                    <!-- Language Selector -->
+                    <div class="form-group">
+                        <label class="label" for="language">
+                            <span class="label-icon">▸</span> LANGUAGE
+                        </label>
+                        <select id="language" class="select">
+                            <option value="auto">AUTO DETECT</option>
+                            <option value="javascript">JavaScript</option>
+                            <option value="typescript">TypeScript</option>
+                            <option value="python">Python</option>
+                            <option value="java">Java</option>
+                            <option value="c">C</option>
+                            <option value="cpp">C++</option>
+                            <option value="csharp">C#</option>
+                            <option value="go">Go</option>
+                            <option value="rust">Rust</option>
+                            <option value="ruby">Ruby</option>
+                            <option value="php">PHP</option>
+                            <option value="swift">Swift</option>
+                            <option value="kotlin">Kotlin</option>
+                            <option value="html">HTML</option>
+                            <option value="css">CSS</option>
+                            <option value="sql">SQL</option>
+                            <option value="bash">Bash</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+
+                    <!-- Problem Description -->
+                    <div class="form-group">
+                        <label class="label" for="problem">
+                            <span class="label-icon">▸</span> PROBLEM DESCRIPTION
+                            <span class="label-hint">(optional — leave blank for general annihilation)</span>
+                        </label>
+                        <textarea id="problem" class="textarea problem-input" rows="2"
+                            placeholder="What's wrong? Or just say 'simplify this mess'..."></textarea>
+                    </div>
+
+                    <!-- Code Input -->
+                    <div class="form-group code-group">
+                        <label class="label" for="code">
+                            <span class="label-icon">▸</span> CODE
+                        </label>
+                        <div class="code-editor">
+                            <div class="line-numbers" id="lineNumbers">1</div>
+                            <textarea id="code" class="textarea code-input"
+                                placeholder="Paste your bloated code here..." spellcheck="false"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button id="analyzeBtn" class="btn-annihilate" type="button">
+                        <span class="btn-icon">⚡</span>
+                        <span class="btn-text">ANNIHILATE</span>
+                        <span class="btn-sub">Ctrl+Enter</span>
+                    </button>
+                </div>
+            </section>
+
+            <!-- Output Section -->
+            <section class="panel output-panel" id="outputPanel">
+                <div class="panel-header">
+                    <div class="panel-dots">
+                        <span class="dot red"></span>
+                        <span class="dot yellow"></span>
+                        <span class="dot green"></span>
+                    </div>
+                    <span class="panel-title">OUTPUT_TERMINAL</span>
+                    <span class="panel-badge verdict-badge" id="verdictBadge">AWAITING INPUT</span>
+                </div>
+
+                <div class="panel-body output-body">
+                    <!-- Empty State -->
+                    <div class="empty-state" id="emptyState">
+                        <div class="empty-icon">
+                            <span class="terminal-cursor">█</span>
+                        </div>
+                        <p class="empty-title">READY TO ANNIHILATE</p>
+                        <p class="empty-sub">Paste code. Describe the problem. Watch it disappear.</p>
+                        <div class="empty-philosophy">
+                            <p>"The best code is no code at all."</p>
+                            <p class="philosophy-attr">— Son of Anton</p>
+                        </div>
+                    </div>
+
+                    <!-- Loading State -->
+                    <div class="loading-state hidden" id="loadingState">
+                        <div class="loading-terminal">
+                            <div class="loading-line" id="loadingLine1">
+                                <span class="prompt">$</span> <span class="typing"></span>
+                            </div>
+                        </div>
+                        <div class="loading-bar-container">
+                            <div class="loading-bar" id="loadingBar"></div>
+                        </div>
+                        <p class="loading-label">TARGETING BLOAT...</p>
+                    </div>
+
+                    <!-- Results -->
+                    <div class="results hidden" id="results">
+                        <!-- Verdict Header -->
+                        <div class="result-header" id="resultHeader">
+                            <div class="verdict-icon" id="verdictIcon"></div>
+                            <div class="verdict-info">
+                                <h2 class="verdict-title" id="verdictTitle"></h2>
+                                <p class="verdict-subtitle" id="verdictHotTake"></p>
+                            </div>
+                        </div>
+
+                        <!-- Stats Row -->
+                        <div class="stats-row" id="statsRow">
+                            <div class="stat-card">
+                                <span class="stat-value" id="linesRemoved">0</span>
+                                <span class="stat-label">LINES REMOVED</span>
+                            </div>
+                            <div class="stat-card">
+                                <span class="stat-value" id="destructionScore">0</span>
+                                <span class="stat-label">DESTRUCTION %</span>
+                            </div>
+                            <div class="stat-card">
+                                <span class="stat-value" id="linesBefore">0</span>
+                                <span class="stat-label">BEFORE</span>
+                            </div>
+                            <div class="stat-card">
+                                <span class="stat-value" id="linesAfter">0</span>
+                                <span class="stat-label">AFTER</span>
+                            </div>
+                        </div>
+
+                        <!-- Explanation -->
+                        <div class="result-section">
+                            <h3 class="section-title"><span class="label-icon">▸</span> ANALYSIS</h3>
+                            <div class="explanation-text" id="explanationText"></div>
+                        </div>
+
+                        <!-- What Was Removed -->
+                        <div class="result-section" id="removedSection">
+                            <h3 class="section-title"><span class="label-icon">▸</span> ELIMINATED</h3>
+                            <ul class="removed-list" id="removedList"></ul>
+                        </div>
+
+                        <!-- Simplified Code -->
+                        <div class="result-section" id="codeSection">
+                            <h3 class="section-title">
+                                <span class="label-icon">▸</span> RESULT
+                                <button class="copy-btn" id="copyBtn" title="Copy code">
+                                    <span>COPY</span>
+                                </button>
+                            </h3>
+                            <div class="code-output">
+                                <pre><code id="simplifiedCode"></code></pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Error State -->
+                    <div class="error-state hidden" id="errorState">
+                        <div class="error-icon">⚠</div>
+                        <p class="error-title">SYSTEM MALFUNCTION</p>
+                        <p class="error-msg" id="errorMsg"></p>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>Inspired by <span class="highlight">Silicon Valley</span> S5 · Powered by <span
+                    class="highlight">Groq</span> · Built with the philosophy of <span class="highlight">less is
+                    more</span></p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,26 @@
+{
+    "name": "son-of-anton",
+    "version": "1.0.0",
+    "description": "AI code simplifier that solves problems through elimination, not addition",
+    "main": "server/index.js",
+    "scripts": {
+        "start": "node server/index.js",
+        "dev": "nodemon server/index.js"
+    },
+    "keywords": [
+        "ai",
+        "code-simplifier",
+        "groq",
+        "silicon-valley"
+    ],
+    "license": "MIT",
+    "dependencies": {
+        "cors": "^2.8.6",
+        "dotenv": "^17.3.1",
+        "express": "^5.2.1",
+        "groq-sdk": "^0.37.0"
+    },
+    "devDependencies": {
+        "nodemon": "^3.1.14"
+    }
+}
